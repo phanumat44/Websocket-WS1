@@ -1,4 +1,4 @@
-const socket = io('https://chatcap.onrender.com:1000')
+const socket = io('https://chatcap.onrender.com')
 
 
 const msgInput = document.querySelector('#message')
