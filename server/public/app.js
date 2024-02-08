@@ -215,4 +215,3 @@ function showRooms(rooms) {
     }
 }
 
-console.log('Retrieved data from localStorage:', data);
