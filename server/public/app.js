@@ -174,7 +174,12 @@ function enterRoom(e) {
             name: nameInput.value,
             room: chatRoom.value
         })
+        Toast.fire({
+            icon: "success",
+            title: "เข้าห้องแชทแล้ว"
+        });
     }
+
 }
 
 document.querySelector('.form-msg')
