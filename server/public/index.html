@@ -28,9 +28,17 @@
 
 <body>
     <main>
-        <div class="flex  items-center">
-            <img src="https://uppic.cloud/ib/hkOUqhvAAw.png" alt="logo" class="w-12 h-12 mr-2 rounded-full ">
-            <h1 class="text-2xl font-bold text-black">Chat Cap</h1>
+        <div class="flex justify-between">
+            <div class="flex  items-center">
+                <img src="https://uppic.cloud/ib/hkOUqhvAAw.png" alt="logo" class="w-12 h-12 mr-2 rounded-full ">
+                <h1 class="text-2xl font-bold text-black">Chat Cap</h1>
+            </div>
+            <div class="flex items-center">
+                <button onclick="AddRoomPrompt()"
+                    class="bg-[#FF8B35;] shadow-md px-4 py-3 text-white border-1  rounded-full" id="leave">
+                    <i class="fa-solid fa-sign-out" style="color: #fff;"></i>
+                    เพิ่มห้อง</button>
+            </div>
         </div>
         <form class="form-join">
             <input class="p-2 rounded-full shadow-md text-black" type="text" id="name" maxlength="8" placeholder="ชื่อ"
@@ -43,7 +51,7 @@
                 </select>
             </div>
 
-            <button id="join" class="bg-[#c1ef44;] shadow-md px-4 py-3 text-black border-1  rounded-full"
+            <button id="join" class="bg-[#FF8B35;] shadow-md px-4 py-3 text-white border-1  rounded-full"
                 type="submit">เข้าร่วม</button>
         </form>
 
@@ -58,7 +66,7 @@
 
         <form class="form-msg bg-white pl-3 overflow-hidden rounded-full shadow-md">
             <input type="text" class="text-black" id="message" placeholder="พิมพ์ข้อความ..." required>
-            <button class="bg-[#c1ef44;] px-4 py-3 m-1 rounded-full" type="submit">
+            <button class="bg-[#FF8B35;] px-4 py-3 m-1 rounded-full" type="submit">
                 <i class="fa-solid fa-paper-plane" style="color: #fff;"></i>
             </button>
         </form>

@@ -57,7 +57,7 @@ input {
 }
 
 .post {
-    background-color: #44dbef;
+    background-color: #df9964;
     border-radius: 10px;
     padding: 0 0 .1rem;
     margin: .5rem;
@@ -66,6 +66,7 @@ input {
 }
 
 .post--left {
+    color: black;
     padding: 0 0 .25rem;
     word-wrap: break-word;
     overflow-wrap: break-word;
@@ -76,16 +77,16 @@ input {
 
 .post--right {
     padding: 0 0 .25rem;
-    background-color: #c1ef44;
+    background-color: #FF8B35;
     width: 60%;
-    color: #000;
+    color: #ffffff;
     align-self: flex-end;
     word-wrap: break-word;
     overflow-wrap: break-word;
 }
 
 .post__header {
-    color: #000000;
+    color: #ffffff;
 
     padding: .25rem .5rem;
     display: flex;
@@ -99,7 +100,7 @@ input {
 }
 
 .post__header--reply {
-    /* background-color: rgb(0, 128, 28); */
+    color: black;
 }
 
 .post__header--name {
@@ -114,7 +115,7 @@ input {
     text-wrap: wrap;
     max-width: 100%;
     margin-top: 5px;
-    color: #333;
+    color: #ffffff;
     padding: .25rem .5rem;
 }
 
@@ -143,4 +144,8 @@ input {
 em {
     font-style: normal;
     font-weight: bold;
+}
+
+.black-text {
+    color: black;
 }

@@ -1,3 +1,4 @@
+//const socket = io('ws://localhost:3500')
 const socket = io('https://chatcap.onrender.com')
 
 
@@ -15,6 +16,7 @@ const chatDisplay = document.querySelector('.chat-display')
 
 socket.on('data', (data) => {
     console.log('Retrived Room:', data);
+
     data.room.forEach((room, i) => {
         var newElement = document.createElement('option');
 
@@ -24,23 +26,88 @@ socket.on('data', (data) => {
 
         chatRoom.appendChild(newElement);
 
-        var jsonData = localStorage.getItem('userData');
-        var data = JSON.parse(jsonData);
-
-
-        if (data?.name && data?.room) {
-
-            console.log("name=" + data.name, "room=" + data.room)
-            nameInput.value = data.name;
-            chatRoom.value = data.room;
-
-        } else {
-            chatRoom.selectedIndex = 0;
-        }
-
     });
+
+    var jsonData = localStorage.getItem('userData');
+    var data = JSON.parse(jsonData);
+
+
+    if (data?.name && data?.room) {
+
+        console.log("name=" + data.name, "room=" + data.room)
+        nameInput.value = data.name;
+        chatRoom.value = data.room;
+
+    } else {
+        chatRoom.selectedIndex = 0;
+    }
 });
 
+socket.on('dataForRefreshList', (data) => {
+    console.log('Refresh Room:', data);
+    while (chatRoom.firstChild) {
+        chatRoom.removeChild(chatRoom.firstChild);
+    }
+
+    data.room.forEach((room, i) => {
+        var newElement = document.createElement('option');
+
+        // Set text content of the element
+        newElement.textContent = room.roomName;
+        newElement.value = room.roomName;
+
+        chatRoom.appendChild(newElement);
+
+
+    });
+
+    var jsonData = localStorage.getItem('userData');
+    var data = JSON.parse(jsonData);
+
+
+    if (data?.name && data?.room) {
+
+        console.log("name=" + data.name, "room=" + data.room)
+        nameInput.value = data.name;
+        chatRoom.value = data.room;
+
+    } else {
+        chatRoom.selectedIndex = 0;
+    }
+
+
+})
+
+async function AddRoomPrompt() {
+
+    const { value: text } = await Swal.fire({
+        input: "text",
+        inputLabel: "เพิ่มห้องแชทใหม่",
+        inputPlaceholder: "กรอกชื่อห้องที่ต้องการเพิ่ม...",
+        confirmButtonText: "เพิ่มห้อง",
+        cancelButtonText: "ยกเลิก",
+        inputAttributes: {
+            "aria-label": "Type your message here"
+        },
+        confirmButtonColor: "#FF8B35",
+        showCancelButton: true
+    });
+    if (text) {
+        try {
+            socket.emit('addRoom', text)
+            console.log("Add Room", text);
+        } catch (error) {
+            console.log(error)
+        }
+
+
+    } else {
+        Toast.fire({
+            icon: "error",
+            title: "ยกเลิกการเพิ่มห้องแชทแล้ว"
+        });
+    }
+}
 
 
 
@@ -133,12 +200,12 @@ socket.on("message", (data) => {
         li.innerHTML = `<div class="post__header 
         ${name === nameInput.value
                 ? 'post__header--user'
-                : 'post__header--reply'
+                : 'post__header--reply '
             }">
         <span class="post__header--name">${name}</span> 
         <span class="post__header--time">${time}</span> 
         </div>
-        <div class="post__text">${text}</div>`
+        <div class="post__text ${name !== nameInput.value ? 'black-text' : ''}">${text}</div>`
     } else {
         li.innerHTML = `<div class="post__text ">${text}</div>`
     }

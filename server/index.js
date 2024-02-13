@@ -5,6 +5,10 @@ import { fileURLToPath } from 'url'
 import { JsonDB } from 'node-json-db';
 import { Config } from 'node-json-db';
 import { nanoid } from 'nanoid';
+// set up dotenv
+import dotenv from 'dotenv'
+dotenv.config()
+
 
 const db = new JsonDB(new Config('DATABASE', true, false, '/'));
 
@@ -16,19 +20,22 @@ const newData = {
     ]
 };
 
-function initDB() {
-    try {
-        // Write data to the database
-        db.push('/data', newData);
-        console.log('Data has been written to the database successfully.');
+// function initDB() {
+//     try {
+//         // Write data to the database
+//         db.push('/data', newData);
+//         console.log('Data has been written to the database successfully.');
 
-        // Read data from the database
-        const data = db.getData('/data');
-        console.log('Data read from the database:', data);
-    } catch (error) {
-        console.error('An error occurred:', error);
-    }
-}
+//         // Read data from the database
+//         const data = db.getData('/data');
+//         console.log('Data read from the database:', data);
+//     } catch (error) {
+//         console.error('An error occurred:', error);
+//     }
+// }
+
+
+
 
 
 const __filename = fileURLToPath(import.meta.url)
@@ -43,7 +50,7 @@ app.use(express.static(path.join(__dirname, "public")))
 
 const expressServer = app.listen(PORT, () => {
 
-    console.log(`listening on port ${PORT}`)
+    console.log(`listening on port ${PORT} at ${process.env.SERVER}`)
 })
 
 // state 
@@ -60,6 +67,9 @@ const io = new Server(expressServer, {
     }
 })
 
+
+
+
 io.on('connection', socket => {
     console.log(`User ${socket.id} connected`)
     try {
@@ -67,6 +77,7 @@ io.on('connection', socket => {
         const data = db.getData('/data').then(data => {
             console.log(data)
             socket.emit('data', data);
+
         });
 
         // Emit the data to the client
@@ -76,8 +87,11 @@ io.on('connection', socket => {
     }
 
 
+
+
+
     // Upon connection - only to user 
-    socket.emit('message', buildMsg(ADMIN, "ยินดีต้อนรับสู่แอปแชทของน้องแคปหมู กรอกชื่อและเลือกห้องเลยจ้า🐶"))
+    socket.emit('message', buildMsg(ADMIN, "ยินดีต้อนรับสู่แอปแชท กรอกชื่อและเลือกห้องเลยจ้า🐶"))
 
     socket.on('enterRoom', ({ name, room }) => {
 
@@ -138,6 +152,29 @@ io.on('connection', socket => {
         console.log(`User ${socket.id} disconnected`)
     })
 
+    socket.on('addRoom', (roomName) => {
+        if (roomName) {
+            try {
+
+                const newRoom = {
+                    id: nanoid(),
+                    roomName: roomName.toString()
+                }
+                db.push('/data/room[]', newRoom);
+                console.log('Room has been added to the database successfully.');
+                db.getData('/data').then(data => {
+                    console.log("datac for rf", data)
+                    socket.emit('dataForRefreshList', data);
+
+                });
+
+            } catch (error) {
+                console.error('An error occurred:', error);
+            }
+        }
+    })
+
+
     // Listening for a message event 
     socket.on('message', ({ name, text }) => {
         const room = getUser(socket.id)?.room
@@ -194,3 +231,4 @@ function getUsersInRoom(room) {
 function getAllActiveRooms() {
     return Array.from(new Set(UsersState.users.map(user => user.room)))
 }
+
