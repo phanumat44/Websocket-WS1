@@ -27,7 +27,8 @@
 </head>
 
 <body>
-    <div class="h-[100vh]">
+
+    <main>
         <div class="flex justify-between bg-white p-3">
             <div class="flex  items-center">
                 <img src="https://uppic.cloud/ib/hkOUqhvAAw.png" alt="logo" class="w-12 h-12 mr-2 rounded-full ">
@@ -40,9 +41,8 @@
                     เพิ่มห้อง</button>
             </div>
         </div>
-        <main>
-
-            <form class="form-join">
+        <div class=" mx-[1rem] mt-[1rem]">
+            <form class="form-join ">
                 <input class="p-2 rounded-full shadow-md text-black" type="text" id="name" maxlength="8"
                     placeholder="ชื่อ" size="5" required>
                 <!-- <input class="p-2 rounded-full shadow-md text-black" type="text" id="room" placeholder="ห้องแชท " size=" 5" -->
@@ -56,28 +56,28 @@
                 <button id="join" class="bg-[#FF8B35;] shadow-md px-4 py-3 text-white border-1  rounded-full"
                     type="submit">เข้าร่วม</button>
             </form>
+        </div>
+        <p class="user-list px-[1rem] "></p>
 
-            <p class="user-list "></p>
+        <p class="room-list px-[1rem]"></p>
 
-            <p class="room-list"></p>
-
-            <ul class="chat-display max-h-[50%] lg:max-h-[60%]"></ul>
+        <ul class="chat-display max-h-[50%] lg:max-h-[60%] mx-[1rem] self-center"></ul>
 
 
-            <p class="activity"></p>
+        <p class="activity px-[1rem] "></p>
 
-            <form class="form-msg bg-white pl-3 overflow-hidden rounded-full shadow-md">
+        <div class=" mx-[1rem] mb-[1rem]">
+            <form class="form-msg bg-white pl-3 overflow-hidden rounded-full shadow-md  ">
                 <input type="text" class="text-black" id="message" placeholder="พิมพ์ข้อความ..." required>
                 <button class="bg-[#FF8B35;] px-4 py-3 m-1 rounded-full" type="submit">
                     <i class="fa-solid fa-paper-plane" style="color: #fff;"></i>
                 </button>
             </form>
+        </div>
 
 
 
-
-        </main>
-    </div>
+    </main>
 </body>
 
 </html>
